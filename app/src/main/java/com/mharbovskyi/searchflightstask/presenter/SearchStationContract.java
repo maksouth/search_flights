@@ -12,6 +12,7 @@ public interface SearchStationContract {
     }
 
     interface Presenter extends BaseContract.Presenter {
+        void start();
         void searchButtonClicked();
         void stationCLicked(Station station);
     }

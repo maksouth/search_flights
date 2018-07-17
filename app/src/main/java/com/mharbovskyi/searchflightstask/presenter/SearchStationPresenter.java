@@ -1,18 +1,61 @@
 package com.mharbovskyi.searchflightstask.presenter;
 
+import android.util.Log;
+
+import com.mharbovskyi.searchflightstask.R;
+import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
 import com.mharbovskyi.searchflightstask.model.Station;
+import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class SearchStationPresenter implements SearchStationContract.Presenter {
 
-    SearchStationContract.View view;
+    private static final String TAG = SearchStationAdapter.class.getSimpleName();
 
-    public SearchStationPresenter(SearchStationContract.View view) {
+    private SearchStationContract.View view;
+    private StationsDataSource stationsDataSource;
+    private List<Station> stationList;
+    private Disposable disposable;
+
+    public SearchStationPresenter(SearchStationContract.View view,
+                                  StationsDataSource stationsDataSource) {
         this.view = view;
+        this.stationsDataSource = stationsDataSource;
+    }
+
+
+    @Override
+    public void start() {
+        disposable = stationsDataSource.getStations()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(v -> view.showLoading(R.string.loading_stations))
+                .doOnTerminate(view::hideLoading)
+                .subscribe(stations -> {
+                    stationList = stations;
+                    view.loadStations(stations);
+                }, err -> {
+                    Log.d(TAG, err.toString(), err);
+                    view.showError(R.string.error_loading_stations);
+                });
     }
 
     @Override
     public void searchButtonClicked() {
-
+        // TODO: 17.07.18 move to rx callable if needed
+        String searchText = view.getStationSearchText().trim();
+        List<Station> filteredStationList = new LinkedList<>();
+        for (Station station : stationList) {
+            if (station.getCity().contains(searchText)
+                    || station.getCode().contains(searchText)) {
+                filteredStationList.add(station);
+            }
+        }
+        view.loadStations(filteredStationList);
     }
 
     @Override
@@ -22,6 +65,9 @@ public class SearchStationPresenter implements SearchStationContract.Presenter {
 
     @Override
     public void destroy() {
+        if(!disposable.isDisposed())
+            disposable.dispose();
         view = null;
+        stationsDataSource = null;
     }
 }

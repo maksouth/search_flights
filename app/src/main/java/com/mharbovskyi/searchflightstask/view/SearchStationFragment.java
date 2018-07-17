@@ -1,8 +1,8 @@
 package com.mharbovskyi.searchflightstask.view;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +14,21 @@ import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.Station;
 import com.mharbovskyi.searchflightstask.presenter.SearchStationContract;
 import com.mharbovskyi.searchflightstask.presenter.SearchStationPresenter;
+import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 
 import java.util.List;
-import java.util.function.ToDoubleBiFunction;
 
 public class SearchStationFragment extends AbstractFragment implements SearchStationContract.View {
 
     private SearchStationContract.Presenter presenter;
     private OnFragmentInteractionListener interactionListener;
 
+    private SearchStationAdapter adapter;
+
     private Button searchButton;
     private EditText searchText;
     private RecyclerView stationRecyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
     public SearchStationFragment() {
         // Required empty public constructor
@@ -41,6 +44,12 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
         searchButton = view.findViewById(R.id.search_station_button);
         searchText = view.findViewById(R.id.search_station_text);
         stationRecyclerView = view.findViewById(R.id.station_list);
+
+        stationRecyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        stationRecyclerView.setLayoutManager(layoutManager);
+        adapter = new SearchStationAdapter();
+        stationRecyclerView.setAdapter(adapter);
 
         searchButton.setOnClickListener(v->presenter.searchButtonClicked());
 
@@ -68,7 +77,7 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
 
     @Override
     public void loadStations(List<Station> stations) {
-
+        adapter.loadStations(stations);
     }
 
     @Override
