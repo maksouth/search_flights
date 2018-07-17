@@ -18,12 +18,16 @@ import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
+
 public class SearchStationFragment extends AbstractFragment implements SearchStationContract.View {
 
     private SearchStationContract.Presenter presenter;
     private OnFragmentInteractionListener interactionListener;
 
     private SearchStationAdapter adapter;
+
+    private Disposable recyclerViewItemDisposable;
 
     private Button searchButton;
     private EditText searchText;
@@ -38,8 +42,6 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        presenter = new SearchStationPresenter(this);
-
         View view = inflater.inflate(R.layout.fragment_search_station, container, false);
         searchButton = view.findViewById(R.id.search_station_button);
         searchText = view.findViewById(R.id.search_station_text);
@@ -51,7 +53,13 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
         adapter = new SearchStationAdapter();
         stationRecyclerView.setAdapter(adapter);
 
+        presenter = new SearchStationPresenter(this,
+                ((MainActivity)getActivity()).getStationsDataSource());
         searchButton.setOnClickListener(v->presenter.searchButtonClicked());
+        presenter.start();
+
+        recyclerViewItemDisposable = adapter.getPositionClick()
+                .subscribe(presenter::stationCLicked);
 
         return view;
     }
@@ -70,6 +78,8 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
     @Override
     public void onDetach() {
         super.onDetach();
+        if (!recyclerViewItemDisposable.isDisposed())
+            recyclerViewItemDisposable.dispose();
         presenter.destroy();
         presenter = null;
         interactionListener = null;
@@ -88,12 +98,6 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
     @Override
     public void goToSearchScreen(Station station) {
         interactionListener.onFragmentInteraction(station);
-    }
-
-    @Override
-    protected ViewGroup getRootLayout() {
-        // TODO: 17.07.18  
-        return null;
     }
 
     /**

@@ -7,4 +7,6 @@
     <string name="wro">WRO</string>
     <string name="loading_stations">Loading stations..</string>
     <string name="error_loading_stations">Failed to load stations..</string>
+    <string name="default_origin">WRO</string>
+    <string name="default_destination">KBP</string>
 </resources>

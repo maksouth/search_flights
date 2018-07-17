@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.presenter.BaseContract;
 
 public abstract class AbstractFragment extends Fragment implements BaseContract.View {
@@ -31,5 +32,7 @@ public abstract class AbstractFragment extends Fragment implements BaseContract.
 
     }
 
-    protected abstract ViewGroup getRootLayout();
+    protected ViewGroup getRootLayout(){
+        return getActivity().findViewById(R.id.fragment_container);
+    };
 }

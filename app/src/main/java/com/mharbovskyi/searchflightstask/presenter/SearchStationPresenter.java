@@ -60,7 +60,7 @@ public class SearchStationPresenter implements SearchStationContract.Presenter {
 
     @Override
     public void stationCLicked(Station station) {
-
+        view.goToSearchScreen(station);
     }
 
     @Override

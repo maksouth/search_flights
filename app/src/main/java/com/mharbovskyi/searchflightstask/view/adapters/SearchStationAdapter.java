@@ -2,6 +2,7 @@ package com.mharbovskyi.searchflightstask.view.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,21 @@ import com.mharbovskyi.searchflightstask.model.Station;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+
 public class SearchStationAdapter extends RecyclerView.Adapter<SearchStationAdapter.ViewHolder> {
 
+    private static final String TAG = SearchStationAdapter.class.getSimpleName();
+
     private List<Station> stationList = new ArrayList<>();
+    private final PublishSubject<Station> onCLickStationSubject = PublishSubject.create();
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView stationName;
         TextView stationCode;
+        // TODO: 17.07.18 is it ok?
+        Station value;
 
         ViewHolder(View view) {
             super(view);
@@ -28,6 +37,7 @@ public class SearchStationAdapter extends RecyclerView.Adapter<SearchStationAdap
         }
 
         void populate(Station station) {
+            value = station;
             stationName.setText(station.getCity());
             stationCode.setText(station.getCode());
         }
@@ -38,18 +48,27 @@ public class SearchStationAdapter extends RecyclerView.Adapter<SearchStationAdap
         notifyDataSetChanged();
     }
 
+    public Observable<Station> getPositionClick() {
+        return onCLickStationSubject;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_station, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
-        return viewHolder;
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         holder.populate(stationList.get(position));
+        holder.itemView.setOnClickListener(v->{
+            Log.d(TAG, "Item clicked " + holder.value);
+            onCLickStationSubject.onNext(holder.value);
+            onCLickStationSubject.onComplete();
+        });
     }
 
     @Override

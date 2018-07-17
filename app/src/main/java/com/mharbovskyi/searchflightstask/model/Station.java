@@ -16,4 +16,12 @@ public class Station {
     public String getCode() {
         return code;
     }
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "city='" + city + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }
