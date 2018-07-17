@@ -1,5 +1,6 @@
 package com.mharbovskyi.searchflightstask.view;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 
