@@ -15,7 +15,7 @@ public class FlightListPresenter implements FlightListContract.Presenter {
 
     @Override
     public void loadFlights(List<FlightDetailsModel> flights) {
-        view.showFlights(flights);
+        if(flights != null) view.showFlights(flights);
     }
 
     @Override

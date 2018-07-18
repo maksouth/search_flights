@@ -181,6 +181,16 @@ public class FlightDetailsModel implements Parcelable {
         }
     }
 
+    @Override
+    public String toString() {
+        return "FlightDetailsModel{" +
+                "date='" + date + '\'' +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
+                '}';
+    }
+
     public static final Creator<FlightDetailsModel> CREATOR = new Creator<FlightDetailsModel>() {
         @Override
         public FlightDetailsModel createFromParcel(Parcel in) {

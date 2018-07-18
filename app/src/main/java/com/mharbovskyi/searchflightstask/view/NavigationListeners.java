@@ -13,4 +13,8 @@ public interface NavigationListeners {
     interface ShowSearchStationNavigationListener {
         void goToSearchStationScreen();
     }
+
+    interface ShowFlightDetailsNavigationListener {
+        void goToFlightDetailsScreen(FlightDetailsModel flightDetailsModel);
+    }
 }

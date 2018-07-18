@@ -29,7 +29,7 @@ public class RawFlightDetailsMapper {
                                     .fareClass(flights.regularFare.fareClass)
                                     .infantsLeft(flights.infantsLeft)
                                     .flightNumber(flights.flightNumber)
-                                    .date(segments.time[0])
+                                    .date(flights.time[0])
                                     .duration(segments.duration)
                                     .regularFarePrice(fares.publishedFare)
                                     .discountInPercent(fares.discountInPercent);

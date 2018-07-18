@@ -6,6 +6,7 @@
     <string name="station_search_button_text">SEARCH</string>
     <string name="wro">WRO</string>
     <string name="loading_stations">Loading stations..</string>
+    <string name="loading_flights">Loading flights..</string>
     <string name="error_loading_stations">Failed to load stations..</string>
     <string name="default_origin">Click here</string>
     <string name="default_destination">Click here</string>
@@ -13,4 +14,5 @@
     <string name="error_destination_not_specified">Please choose destination</string>
     <string name="error_wrong_date">Please choose correct date</string>
     <string name="error_incorrect_number_of_passengers">Please select passengers</string>
+    <string name="error_while_flights_search">Error while searching flights</string>
 </resources>

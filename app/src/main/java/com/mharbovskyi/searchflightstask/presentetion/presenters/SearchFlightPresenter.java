@@ -1,5 +1,7 @@
 package com.mharbovskyi.searchflightstask.presentetion.presenters;
 
+import android.util.Log;
+
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
 import com.mharbovskyi.searchflightstask.model.SearchRequestModel;
@@ -9,6 +11,7 @@ import com.mharbovskyi.searchflightstask.view.SearchFlightFragment;
 
 import java.util.Date;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class SearchFlightPresenter implements SearchFlightContract.Presenter {
@@ -60,7 +63,15 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
                     .children(children);
 
             flightRequestDisposable = flightDataSource.searchFlights(searchRequestBuilder.build())
-                    .subscribe(flightDetailsModels -> view.goToFlightResultScreen(flightDetailsModels, origin, destination));
+                    .doOnTerminate(view::hideLoading)
+                    .doOnSubscribe(ignored->view.showLoading(R.string.loading_flights))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            flightDetailsModels -> view.goToFlightResultScreen(flightDetailsModels, origin, destination),
+                            throwable -> {
+                                Log.d(TAG, "Error while retrieving flights", throwable);
+                                view.showError(R.string.error_while_flights_search);
+                            });
         }
     }
 

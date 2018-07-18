@@ -11,12 +11,14 @@ import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.Station;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity
         implements SearchStationFragment.OnNewStationListener,
         NavigationListeners.ShowFlightListNavigationListener,
-        NavigationListeners.ShowSearchStationNavigationListener {
+        NavigationListeners.ShowSearchStationNavigationListener,
+        NavigationListeners.ShowFlightDetailsNavigationListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -72,14 +74,16 @@ public class MainActivity extends Activity
     public void goToFlightListScreen(List<FlightDetailsModel> flights) {
         FlightListFragment fragment = new FlightListFragment();
 
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(FlightListFragment.ARGUMENT_FLIGHTS_LIST, new ArrayList<>(flights));
+        fragment.setArguments(bundle);
+
         fragmentManager.beginTransaction()
                 .hide(fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName()))
                 .add(R.id.fragment_container, fragment,
                         FlightListFragment.class.getSimpleName())
                 .addToBackStack(FlightListFragment.class.getSimpleName())
                 .commit();
-
-        fragment.showFlights(flights);
     }
 
     @Override
@@ -90,5 +94,10 @@ public class MainActivity extends Activity
                         SearchStationFragment.class.getSimpleName())
                 .addToBackStack(SearchStationFragment.class.getSimpleName())
                 .commit();
+    }
+
+    @Override
+    public void goToFlightDetailsScreen(FlightDetailsModel flightDetailsModel) {
+        Log.d(TAG, "goToFlightDetailsScreen " + flightDetailsModel);
     }
 }

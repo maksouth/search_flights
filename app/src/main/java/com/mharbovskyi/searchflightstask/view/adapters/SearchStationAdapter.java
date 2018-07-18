@@ -22,7 +22,7 @@ public class SearchStationAdapter extends RecyclerView.Adapter<SearchStationAdap
     private static final String TAG = SearchStationAdapter.class.getSimpleName();
 
     private List<Station> stationList = new ArrayList<>();
-    private final PublishSubject<Station> onCLickStationSubject = PublishSubject.create();
+    private final PublishSubject<Station> onClickStationSubject = PublishSubject.create();
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView stationName;
@@ -49,7 +49,7 @@ public class SearchStationAdapter extends RecyclerView.Adapter<SearchStationAdap
     }
 
     public Observable<Station> getPositionClick() {
-        return onCLickStationSubject;
+        return onClickStationSubject;
     }
 
     @NonNull
@@ -65,9 +65,9 @@ public class SearchStationAdapter extends RecyclerView.Adapter<SearchStationAdap
 
         holder.populate(stationList.get(position));
         holder.itemView.setOnClickListener(v->{
-            Log.d(TAG, "Item clicked " + holder.value);
-            onCLickStationSubject.onNext(holder.value);
-            onCLickStationSubject.onComplete();
+            Log.d(TAG, "Station clicked " + holder.value);
+            onClickStationSubject.onNext(holder.value);
+            onClickStationSubject.onComplete();
         });
     }
 
