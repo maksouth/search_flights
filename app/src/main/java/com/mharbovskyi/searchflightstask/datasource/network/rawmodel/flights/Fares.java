@@ -1,11 +1,11 @@
 package com.mharbovskyi.searchflightstask.datasource.network.rawmodel.flights;
 
 public class Fares {
-     String amount;
-     String count;
-     String hasPromoDiscount;
-     String discountInPercent;
-     String type;
-     String publishedFare;
-     String hasDiscount;
+     public String amount;
+     public String count;
+     public String hasPromoDiscount;
+     public String discountInPercent;
+     public String type;
+     public String publishedFare;
+     public String hasDiscount;
 }

@@ -2,16 +2,14 @@ package com.mharbovskyi.searchflightstask.view;
 
 
 import android.app.Fragment;
-import android.support.design.widget.Snackbar;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.app.ProgressDialog;
+import android.widget.Toast;
 
-import com.mharbovskyi.searchflightstask.R;
-import com.mharbovskyi.searchflightstask.presenter.BaseContract;
+import com.mharbovskyi.searchflightstask.presentetion.contracts.BaseContract;
 
 public abstract class AbstractFragment extends Fragment implements BaseContract.View {
 
-    private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
 
     public AbstractFragment() {
         // Required empty public constructor
@@ -19,20 +17,27 @@ public abstract class AbstractFragment extends Fragment implements BaseContract.
 
     @Override
     public void showError(int messageResourceId) {
-        Snackbar.make(getRootLayout(), getString(messageResourceId), Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), getString(messageResourceId), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showLoading(int messageResourceId) {
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        } else {
+            progressDialog = new ProgressDialog(getActivity());
+        }
 
+        progressDialog.setMessage(getString(messageResourceId));
+        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
+        if(progressDialog!=null){
+            progressDialog.dismiss();
+        }
 
+        progressDialog = null;
     }
-
-    protected ViewGroup getRootLayout(){
-        return getActivity().findViewById(R.id.fragment_container);
-    };
 }

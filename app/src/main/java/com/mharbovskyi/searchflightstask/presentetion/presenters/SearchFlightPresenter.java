@@ -1,9 +1,11 @@
-package com.mharbovskyi.searchflightstask.presenter;
+package com.mharbovskyi.searchflightstask.presentetion.presenters;
 
 import com.mharbovskyi.searchflightstask.R;
-import com.mharbovskyi.searchflightstask.datasource.network.FlightNetworkDataSource;
+import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
 import com.mharbovskyi.searchflightstask.model.SearchRequestModel;
 import com.mharbovskyi.searchflightstask.model.Station;
+import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchFlightContract;
+import com.mharbovskyi.searchflightstask.view.SearchFlightFragment;
 
 import java.util.Date;
 
@@ -11,30 +13,37 @@ import io.reactivex.disposables.Disposable;
 
 public class SearchFlightPresenter implements SearchFlightContract.Presenter {
 
+    private static final String TAG = SearchFlightFragment.class.getSimpleName();
+
+    enum StationType { ORIGIN, DESTINATION };
+
     private SearchFlightContract.View view;
-    private FlightNetworkDataSource flightDataSource;
+    private FlightsDataSource flightDataSource;
 
     private Disposable flightRequestDisposable;
 
     private Station origin;
     private Station destination;
 
+    private StationType selectedStationType;
+
     public SearchFlightPresenter(SearchFlightContract.View view,
-                                 FlightNetworkDataSource flightDataSource) {
+                                 FlightsDataSource flightDataSource) {
         this.view = view;
         this.flightDataSource = flightDataSource;
     }
 
     @Override
-    public void onNewOrigin(Station origin) {
-        this.origin = origin;
-        view.setOrigin(origin.getCity());
-    }
-
-    @Override
-    public void onNewDestination(Station destination) {
-        this.destination = destination;
-        view.setDestination(destination.getCity());
+    public void onNewStation(Station station) {
+        switch (selectedStationType) {
+            case ORIGIN:
+                this.origin = station;
+                view.setOrigin(origin.getCity());
+                break;
+            case DESTINATION:
+                this.destination = station;
+                view.setDestination(destination.getCity());
+        }
     }
 
     @Override
@@ -50,18 +59,21 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
                     .teens(teens)
                     .children(children);
 
-            flightRequestDisposable = flightDataSource.searchFlights(searchRequestBuilder.build()).subscribe();
+            flightRequestDisposable = flightDataSource.searchFlights(searchRequestBuilder.build())
+                    .subscribe(flightDetailsModels -> view.goToFlightResultScreen(flightDetailsModels, origin, destination));
         }
     }
 
     @Override
     public void originLabelClicked() {
-
+        selectedStationType = StationType.ORIGIN;
+        view.goToSearchStationScreen();
     }
 
     @Override
     public void destinationLabelClicked() {
-
+        selectedStationType = StationType.DESTINATION;
+        view.goToSearchStationScreen();
     }
 
     @Override

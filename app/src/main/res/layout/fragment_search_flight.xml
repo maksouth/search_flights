@@ -67,7 +67,7 @@
         android:id="@+id/adults_number_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="1"
         app:layout_constraintStart_toStartOf="@+id/teens_number_label"
         app:layout_constraintTop_toTopOf="@+id/textView4" />
 
@@ -92,10 +92,11 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="Adults"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="149dp" />
+        app:layout_constraintStart_toEndOf="@+id/destination"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
@@ -160,6 +161,6 @@
         android:layout_marginStart="8dp"
         android:text="0"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        tools:layout_editor_absoluteY="68dp" />
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
 
 </android.support.constraint.ConstraintLayout>

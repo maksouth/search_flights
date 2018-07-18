@@ -1,11 +1,11 @@
 package com.mharbovskyi.searchflightstask.datasource.network.rawmodel.flights;
 
 public class Segments {
-     String duration;
-     String[] time;
-     String origin;
-     String[] timeUTC;
-     String flightNumber;
-     String segmentNr;
-     String destination;
+     public String duration;
+     public String[] time;
+     public String origin;
+     public String[] timeUTC;
+     public String flightNumber;
+     public String segmentNr;
+     public String destination;
 }

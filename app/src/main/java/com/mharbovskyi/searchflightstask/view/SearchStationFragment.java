@@ -12,8 +12,8 @@ import android.widget.EditText;
 
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.Station;
-import com.mharbovskyi.searchflightstask.presenter.SearchStationContract;
-import com.mharbovskyi.searchflightstask.presenter.SearchStationPresenter;
+import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchStationContract;
+import com.mharbovskyi.searchflightstask.presentetion.presenters.SearchStationPresenter;
 import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import io.reactivex.disposables.Disposable;
 public class SearchStationFragment extends AbstractFragment implements SearchStationContract.View {
 
     private SearchStationContract.Presenter presenter;
-    private OnFragmentInteractionListener interactionListener;
+    private OnNewStationListener interactionListener;
 
     private SearchStationAdapter adapter;
 
@@ -67,11 +67,11 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            interactionListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnNewStationListener) {
+            interactionListener = (OnNewStationListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement ShowFlightListNavigationListener");
         }
     }
 
@@ -97,20 +97,10 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
 
     @Override
     public void goToSearchScreen(Station station) {
-        interactionListener.onFragmentInteraction(station);
+        interactionListener.onNewStation(station);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Station station);
+    public interface OnNewStationListener {
+        void onNewStation(Station station);
     }
 }

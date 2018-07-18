@@ -1,6 +1,5 @@
 package com.mharbovskyi.searchflightstask.view;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,24 +13,20 @@ import android.widget.TextView;
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.Station;
-import com.mharbovskyi.searchflightstask.presenter.SearchFlightContract;
-import com.mharbovskyi.searchflightstask.presenter.SearchFlightPresenter;
+import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchFlightContract;
+import com.mharbovskyi.searchflightstask.presentetion.presenters.SearchFlightPresenter;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SearchFlightFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
 public class SearchFlightFragment extends AbstractFragment
         implements SearchFlightContract.View {
 
     private SearchFlightContract.Presenter presenter;
 
-    private OnFragmentInteractionListener mListener;
+    private NavigationListeners.ShowFlightListNavigationListener showFlightListFragmentListener;
+    private NavigationListeners.ShowSearchStationNavigationListener searchStationFragmentListener;
 
     private Button searchButton;
     private TextView originLabel;
@@ -68,6 +63,8 @@ public class SearchFlightFragment extends AbstractFragment
         presenter = new SearchFlightPresenter(this, ((MainActivity)getActivity()).getFlightDataSource());
 
         searchButton.setOnClickListener(v -> presenter.searchButtonClicked());
+        originLabel.setOnClickListener(v -> presenter.originLabelClicked());
+        destinationLabel.setOnClickListener(v -> presenter.destinationLabelClicked());
 
         adultsNumberSeekBar.setOnSeekBarChangeListener((AbstractSeekBarListener) (seekBar, progress, fromUser)
                 -> adultsNumberLabel.setText(String.valueOf(progress)));
@@ -76,34 +73,44 @@ public class SearchFlightFragment extends AbstractFragment
         childrenNumberSeekBar.setOnSeekBarChangeListener((AbstractSeekBarListener) (seekBar, progress, fromUser)
                 -> childrenNumberLabel.setText(String.valueOf(progress)));
 
+        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, dayOfMonth);
+            view1.setDate(calendar.getTimeInMillis());
+        });
+
         return view;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof NavigationListeners.ShowFlightListNavigationListener) {
+            showFlightListFragmentListener = (NavigationListeners.ShowFlightListNavigationListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement ShowFlightListNavigationListener");
+        }
+
+        if (context instanceof NavigationListeners.ShowSearchStationNavigationListener) {
+            searchStationFragmentListener = (NavigationListeners.ShowSearchStationNavigationListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement ShowSearchStationNavigationListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        showFlightListFragmentListener = null;
+        searchStationFragmentListener = null;
         presenter.destroy();
         presenter = null;
     }
 
-    public void onNewOrigin(Station station) {
-        presenter.onNewOrigin(station);
-    }
-
-    public void onNewDestination(Station station) {
-        presenter.onNewDestination(station);
+    public void onNewStation(Station station) {
+        presenter.onNewStation(station);
     }
 
     @Override
@@ -137,23 +144,15 @@ public class SearchFlightFragment extends AbstractFragment
     }
 
     @Override
-    public void goToFlightResultScreen(List<FlightDetailsModel> flights) {
-        mListener.onSearchFlightInteraction(flights);
+    public void goToSearchStationScreen() {
+        searchStationFragmentListener.goToSearchStationScreen();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onSearchFlightInteraction(List<FlightDetailsModel> flights);
+    @Override
+    public void goToFlightResultScreen(List<FlightDetailsModel> flights,
+                                       Station origin, Station destination) {
+        // TODO: 18.07.18 pass origin and destination to set toolbar text
+        showFlightListFragmentListener.goToFlightListScreen(flights);
     }
 
     @FunctionalInterface

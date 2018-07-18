@@ -7,10 +7,10 @@
     <string name="wro">WRO</string>
     <string name="loading_stations">Loading stations..</string>
     <string name="error_loading_stations">Failed to load stations..</string>
-    <string name="default_origin">WRO</string>
-    <string name="default_destination">KBP</string>
+    <string name="default_origin">Click here</string>
+    <string name="default_destination">Click here</string>
     <string name="error_origin_not_specified">Please choose origin</string>
-    <string name="error_destination_not_specified">Please choose departure</string>
+    <string name="error_destination_not_specified">Please choose destination</string>
     <string name="error_wrong_date">Please choose correct date</string>
     <string name="error_incorrect_number_of_passengers">Please select passengers</string>
 </resources>

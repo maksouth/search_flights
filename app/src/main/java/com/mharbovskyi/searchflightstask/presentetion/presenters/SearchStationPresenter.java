@@ -1,10 +1,11 @@
-package com.mharbovskyi.searchflightstask.presenter;
+package com.mharbovskyi.searchflightstask.presentetion.presenters;
 
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
 import com.mharbovskyi.searchflightstask.model.Station;
+import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchStationContract;
 import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 
 import java.util.LinkedList;
@@ -47,11 +48,11 @@ public class SearchStationPresenter implements SearchStationContract.Presenter {
     @Override
     public void searchButtonClicked() {
         // TODO: 17.07.18 move to rx callable if needed
-        String searchText = view.getStationSearchText().trim();
+        String searchText = view.getStationSearchText().trim().toLowerCase();
         List<Station> filteredStationList = new LinkedList<>();
         for (Station station : stationList) {
-            if (station.getCity().contains(searchText)
-                    || station.getCode().contains(searchText)) {
+            if (station.getCity().toLowerCase().contains(searchText)
+                    || station.getCode().toLowerCase().contains(searchText)) {
                 filteredStationList.add(station);
             }
         }

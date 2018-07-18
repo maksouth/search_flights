@@ -16,7 +16,7 @@ public interface FlightService {
 
     @Headers("Content-type: application/json")
     @GET("api/v3/Availability")
-    Observable<List<RawFlightDetailsModel>> getFlights(@QueryMap Map<String, String> params);
+    Observable<RawFlightDetailsModel> getFlights(@QueryMap Map<String, String> params);
 
     interface SearchFlightsParams {
         String ORIGIN = "origin";

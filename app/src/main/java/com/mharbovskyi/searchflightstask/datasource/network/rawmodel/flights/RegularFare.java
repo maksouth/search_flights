@@ -1,7 +1,7 @@
 package com.mharbovskyi.searchflightstask.datasource.network.rawmodel.flights;
 
 public class RegularFare {
-     Fares[] fares;
-     String fareKey;
-     String fareClass;
+     public Fares[] fares;
+     public String fareKey;
+     public String fareClass;
 }

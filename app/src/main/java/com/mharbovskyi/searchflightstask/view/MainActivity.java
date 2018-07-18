@@ -1,22 +1,26 @@
 package com.mharbovskyi.searchflightstask.view;
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
-import com.mharbovskyi.searchflightstask.datasource.network.FlightNetworkDataSource;
+import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
 import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
+import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.Station;
 
+import java.util.List;
+
 public class MainActivity extends Activity
-        implements SearchStationFragment.OnFragmentInteractionListener {
+        implements SearchStationFragment.OnNewStationListener,
+        NavigationListeners.ShowFlightListNavigationListener,
+        NavigationListeners.ShowSearchStationNavigationListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private FlightNetworkDataSource flightNetworkDataSource;
+    private FlightsDataSource flightsDataSource;
     private StationsDataSource stationsDataSource;
     private FragmentManager fragmentManager;
 
@@ -27,13 +31,13 @@ public class MainActivity extends Activity
 
         fragmentManager = getFragmentManager();
         stationsDataSource = new StationsDataSource();
-        flightNetworkDataSource = new FlightNetworkDataSource();
+        flightsDataSource = new FlightsDataSource();
 
         stationsDataSource.getStations().subscribe();
 
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, new SearchStationFragment(),
-                        SearchStationFragment.class.getSimpleName())
+                .add(R.id.fragment_container, new SearchFlightFragment(),
+                        SearchFlightFragment.class.getSimpleName())
                 .commit();
     }
 
@@ -41,16 +45,50 @@ public class MainActivity extends Activity
         return stationsDataSource;
     }
 
-    public FlightNetworkDataSource getFlightDataSource() {
-        return flightNetworkDataSource;
+    public FlightsDataSource getFlightDataSource() {
+        return flightsDataSource;
     }
 
     @Override
-    public void onFragmentInteraction(Station station) {
+    public void onNewStation(Station station) {
+
+        SearchFlightFragment searchFlightFragment = (SearchFlightFragment)
+                fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName());
+        if (searchFlightFragment == null) {
+            searchFlightFragment = new SearchFlightFragment();
+            Log.d(TAG, "testing, creating new SearchFlightFragment");
+        }
+
         fragmentManager.beginTransaction()
+                .show(fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName()))
                 .remove(fragmentManager.findFragmentByTag(SearchStationFragment.class.getSimpleName()))
                 .commit();
-        fragmentManager.popBackStack();
-        Log.d(TAG, "#onFragmentInteraction " + station);
+
+        searchFlightFragment.onNewStation(station);
+        Log.d(TAG, "#onNewStation " + station);
+    }
+
+    @Override
+    public void goToFlightListScreen(List<FlightDetailsModel> flights) {
+        FlightListFragment fragment = new FlightListFragment();
+
+        fragmentManager.beginTransaction()
+                .hide(fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName()))
+                .add(R.id.fragment_container, fragment,
+                        FlightListFragment.class.getSimpleName())
+                .addToBackStack(FlightListFragment.class.getSimpleName())
+                .commit();
+
+        fragment.showFlights(flights);
+    }
+
+    @Override
+    public void goToSearchStationScreen() {
+        fragmentManager.beginTransaction()
+                .hide(fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName()))
+                .add(R.id.fragment_container, new SearchStationFragment(),
+                        SearchStationFragment.class.getSimpleName())
+                .addToBackStack(SearchStationFragment.class.getSimpleName())
+                .commit();
     }
 }

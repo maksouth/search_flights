@@ -1,7 +1,8 @@
-package com.mharbovskyi.searchflightstask.presenter;
+package com.mharbovskyi.searchflightstask.presentetion.contracts;
 
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.Station;
+import com.mharbovskyi.searchflightstask.presentetion.contracts.BaseContract;
 
 import java.util.Date;
 import java.util.List;
@@ -14,12 +15,14 @@ public interface SearchFlightContract {
         int getNumberOfAdults();
         int getNumberOfTeens();
         int getNumberOfChildren();
-        void goToFlightResultScreen(List<FlightDetailsModel> flights);
+        void goToSearchStationScreen();
+        void goToFlightResultScreen(List<FlightDetailsModel> flights,
+                                    Station origin,
+                                    Station destination);
     }
 
     interface Presenter extends BaseContract.Presenter {
-        void onNewOrigin(Station origin);
-        void onNewDestination(Station destination);
+        void onNewStation(Station origin);
         void searchButtonClicked();
         void originLabelClicked();
         void destinationLabelClicked();

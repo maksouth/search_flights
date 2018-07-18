@@ -1,9 +1,9 @@
 package com.mharbovskyi.searchflightstask.datasource.network.rawmodel.flights;
 
 public class Trips {
-     Dates[] dates;
-     String origin;
-     String destinationName;
-     String destination;
-     String originName;
+     public Dates[] dates;
+     public String origin;
+     public String destinationName;
+     public String destination;
+     public String originName;
 }

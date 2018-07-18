@@ -1,9 +1,9 @@
 package com.mharbovskyi.searchflightstask.datasource.network.rawmodel.flights;
 
 public class RawFlightDetailsModel {
-     String termsOfUse;
-     Trips[] trips;
-     String serverTimeUTC;
-     String currPrecision;
-     String currency;
+     public String termsOfUse;
+     public Trips[] trips;
+     public String serverTimeUTC;
+     public String currPrecision;
+     public String currency;
 }
