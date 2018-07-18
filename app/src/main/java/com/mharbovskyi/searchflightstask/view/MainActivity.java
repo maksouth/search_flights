@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
+import com.mharbovskyi.searchflightstask.datasource.network.FlightNetworkDataSource;
 import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
 import com.mharbovskyi.searchflightstask.model.Station;
 
@@ -15,6 +16,7 @@ public class MainActivity extends Activity
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private FlightNetworkDataSource flightNetworkDataSource;
     private StationsDataSource stationsDataSource;
     private FragmentManager fragmentManager;
 
@@ -22,9 +24,11 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fragmentManager = getFragmentManager();
 
+        fragmentManager = getFragmentManager();
         stationsDataSource = new StationsDataSource();
+        flightNetworkDataSource = new FlightNetworkDataSource();
+
         stationsDataSource.getStations().subscribe();
 
         fragmentManager.beginTransaction()
@@ -35,6 +39,10 @@ public class MainActivity extends Activity
 
     public StationsDataSource getStationsDataSource() {
         return stationsDataSource;
+    }
+
+    public FlightNetworkDataSource getFlightDataSource() {
+        return flightNetworkDataSource;
     }
 
     @Override

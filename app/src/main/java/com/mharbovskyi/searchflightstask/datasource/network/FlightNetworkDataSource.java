@@ -36,7 +36,7 @@ public class FlightNetworkDataSource {
         flightService = retrofit.create(FlightService.class);
     }
 
-    Observable<List<FlightDetailsModel>> searchFlights(SearchRequestModel request) {
+    public Observable<List<FlightDetailsModel>> searchFlights(SearchRequestModel request) {
         Map<String, String> queryMap = new HashMap<>();
         // TODO: 16.07.18 populate query map and send request
         // TODO: 16.07.18 map results to model

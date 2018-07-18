@@ -6,9 +6,9 @@ public class SearchRequestModel {
     private final String origin;
     private final String destination;
     private final Date departure;
-    private final short children;
-    private final short teens;
-    private final short adults;
+    private final int children;
+    private final int teens;
+    private final int adults;
 
     private SearchRequestModel(Builder builder) {
         origin = builder.origin;
@@ -31,15 +31,15 @@ public class SearchRequestModel {
         return departure;
     }
 
-    public short getChildren() {
+    public int getChildren() {
         return children;
     }
 
-    public short getTeens() {
+    public int getTeens() {
         return teens;
     }
 
-    public short getAdults() {
+    public int getAdults() {
         return adults;
     }
 
@@ -48,9 +48,9 @@ public class SearchRequestModel {
         private final String destination;
         private final Date departure;
 
-        private short children = 0;
-        private short teens = 0;
-        private short adults = 0;
+        private int children = 0;
+        private int teens = 0;
+        private int adults = 0;
 
         public Builder(String origin, String destination, Date departure) {
             this.origin = origin;
@@ -58,18 +58,18 @@ public class SearchRequestModel {
             this.departure = departure;
         }
 
-        public Builder children(short val) {
-            children = val;
+        public Builder children(int val) {
+            if (val > 0) children = val;
             return this;
         }
 
-        public Builder teens(short val) {
-            teens = val;
+        public Builder teens(int val) {
+            if (val > 0) teens = val;
             return this;
         }
 
-        public Builder adults(short val) {
-            adults = val;
+        public Builder adults(int val) {
+            if (val > 0) adults = val;
             return this;
         }
 
