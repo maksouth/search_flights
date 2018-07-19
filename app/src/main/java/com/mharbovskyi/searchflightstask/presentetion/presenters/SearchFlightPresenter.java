@@ -4,12 +4,14 @@ import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
+import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.SearchRequestModel;
 import com.mharbovskyi.searchflightstask.model.Station;
 import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchFlightContract;
 import com.mharbovskyi.searchflightstask.view.SearchFlightFragment;
 
 import java.util.Date;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -67,7 +69,7 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
                     .doOnSubscribe(ignored->view.showLoading(R.string.loading_flights))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            flightDetailsModels -> view.goToFlightResultScreen(flightDetailsModels, origin, destination),
+                            this::processNewFlights,
                             throwable -> {
                                 Log.d(TAG, "Error while retrieving flights", throwable);
                                 view.showError(R.string.error_while_flights_search);
@@ -92,6 +94,12 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
         if (flightRequestDisposable != null && !flightRequestDisposable.isDisposed())
             flightRequestDisposable.dispose();
         view = null;
+    }
+
+    private void processNewFlights(List<FlightDetailsModel> flightDetailsModels) {
+        if(flightDetailsModels == null || flightDetailsModels.size() == 0)
+            view.showError(R.string.error_no_flights_found);
+        else view.goToFlightResultScreen(flightDetailsModels, origin, destination);
     }
 
     private boolean checkFlightRequestPreconditions(Station origin,

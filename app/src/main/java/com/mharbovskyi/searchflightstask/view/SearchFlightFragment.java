@@ -154,15 +154,4 @@ public class SearchFlightFragment extends AbstractFragment
         // TODO: 18.07.18 pass origin and destination to set toolbar text
         showFlightListFragmentListener.goToFlightListScreen(flights);
     }
-
-    @FunctionalInterface
-    private interface AbstractSeekBarListener extends SeekBar.OnSeekBarChangeListener {
-        default void onStartTrackingTouch(SeekBar seekBar) {
-            //intentionally left empty
-        }
-
-        default void onStopTrackingTouch(SeekBar seekBar) {
-            //intentionally left empty
-        }
-    }
 }

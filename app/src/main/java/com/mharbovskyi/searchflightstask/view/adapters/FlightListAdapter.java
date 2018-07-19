@@ -22,7 +22,7 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Vi
     private static final String TAG = FlightListAdapter.class.getSimpleName();
 
     private List<FlightDetailsModel> flightList = new ArrayList<>();
-    private final PublishSubject<FlightDetailsModel> onCLickFlightSubject = PublishSubject.create();
+    private final PublishSubject<FlightDetailsModel> onClickFlightSubject = PublishSubject.create();
 
     public void loadFlights(List<FlightDetailsModel> flights) {
         flightList = flights;
@@ -30,7 +30,7 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Vi
     }
 
     public Observable<FlightDetailsModel> getPositionClick() {
-        return onCLickFlightSubject;
+        return onClickFlightSubject;
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Vi
         holder.populate(flightList.get(position));
         holder.itemView.setOnClickListener(v -> {
             Log.d(TAG, "Flight clicked " + holder.value);
-            onCLickFlightSubject.onNext(holder.value);
+            onClickFlightSubject.onNext(holder.value);
             //no onComplete method, because we can return to this fragment when
             //back button is pressed from flight details screen
         });
@@ -76,7 +76,10 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Vi
 
         void populate(FlightDetailsModel flight) {
             value = flight;
-            //dateLabel.setText(flight.);
+            dateLabel.setText(flight.getDate());
+            flightNumberLabel.setText(flight.getFlightNumber());
+            durationLabel.setText(flight.getDuration());
+            regularFarePriceLabel.setText(flight.getRegularFarePrice());
         }
 
     }

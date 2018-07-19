@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
@@ -25,13 +27,16 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
     public static final String ARGUMENT_FLIGHTS_LIST = "flights-list";
 
     private NavigationListeners.ShowFlightDetailsNavigationListener flightDetailsNavigationListener;
-    private FlightListPresenter presenter;
+    private FlightListContract.Presenter presenter;
 
     private FlightListAdapter adapter;
 
     private Disposable recyclerViewItemDisposable;
-    private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerView;
+    private SeekBar priceFilterSeekBar;
+    private TextView priceFilterValueLabel;
+    private TextView priceCurrencyLabel;
 
     public FlightListFragment() {
         // Required empty public constructor
@@ -43,6 +48,9 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_flight_list, container, false);
         recyclerView = view.findViewById(R.id.flights_list);
+        priceFilterSeekBar = view.findViewById(R.id.price_filter_seekbar);
+        priceFilterValueLabel = view.findViewById(R.id.price_filter_value_label);
+        priceCurrencyLabel = view.findViewById(R.id.currency_label);
         adapter = new FlightListAdapter();
         presenter = new FlightListPresenter(this);
 
@@ -58,6 +66,10 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
 
         recyclerViewItemDisposable = adapter.getPositionClick()
                 .subscribe(presenter::flightClicked);
+
+        priceFilterSeekBar.setOnSeekBarChangeListener((AbstractSeekBarListener) (seekBar, progress, fromUser) -> {
+            presenter.onNewPriceFilter(progress);
+        });
 
         return view;
     }
@@ -95,5 +107,15 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
     @Override
     public void goToFlightDetailsScreen(FlightDetailsModel flightDetailsModel) {
         flightDetailsNavigationListener.goToFlightDetailsScreen(flightDetailsModel);
+    }
+
+    @Override
+    public void setCurrency(String currency) {
+        priceCurrencyLabel.setText(currency);
+    }
+
+    @Override
+    public void setFilterPrice(String filterPrice) {
+        priceFilterValueLabel.setText(filterPrice);
     }
 }

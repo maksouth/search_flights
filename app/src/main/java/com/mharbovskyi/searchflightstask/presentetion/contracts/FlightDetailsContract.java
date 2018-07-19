@@ -3,7 +3,7 @@ package com.mharbovskyi.searchflightstask.presentetion.contracts;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 
 public interface FlightDetailsContract {
-    interface View extends BaseContract.View {
+    interface View {
         void setOrigin(String origin);
         void setDestination(String destination);
         void setInfantsLeft(String infantsLeft);

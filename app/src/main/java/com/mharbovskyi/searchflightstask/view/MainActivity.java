@@ -53,21 +53,17 @@ public class MainActivity extends Activity
 
     @Override
     public void onNewStation(Station station) {
+        Log.d(TAG, "#onNewStation " + station);
 
         SearchFlightFragment searchFlightFragment = (SearchFlightFragment)
                 fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName());
-        if (searchFlightFragment == null) {
-            searchFlightFragment = new SearchFlightFragment();
-            Log.d(TAG, "testing, creating new SearchFlightFragment");
-        }
 
+        fragmentManager.popBackStackImmediate();
         fragmentManager.beginTransaction()
                 .show(fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName()))
-                .remove(fragmentManager.findFragmentByTag(SearchStationFragment.class.getSimpleName()))
                 .commit();
 
         searchFlightFragment.onNewStation(station);
-        Log.d(TAG, "#onNewStation " + station);
     }
 
     @Override
@@ -99,5 +95,16 @@ public class MainActivity extends Activity
     @Override
     public void goToFlightDetailsScreen(FlightDetailsModel flightDetailsModel) {
         Log.d(TAG, "goToFlightDetailsScreen " + flightDetailsModel);
+
+        FlightDetailsFragment fragment = new FlightDetailsFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(FlightDetailsFragment.ARGUMENT_FLIGHT_DETAILS, flightDetailsModel);
+        fragment.setArguments(bundle);
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment, FlightDetailsFragment.class.getSimpleName())
+                .addToBackStack(FlightDetailsFragment.class.getSimpleName())
+                .commit();
     }
 }
