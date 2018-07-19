@@ -1,6 +1,6 @@
 package com.mharbovskyi.searchflightstask.view;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
 
+    private String temporaryToolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,13 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.fragment_container, new SearchFlightFragment(),
                         SearchFlightFragment.class.getSimpleName())
                 .commit();
+
+        fragmentManager.addOnBackStackChangedListener(() -> {
+            Fragment fragment = fragmentManager.findFragmentByTag(FlightListFragment.class.getSimpleName());
+            if(fragment != null && fragment.isVisible()) {
+                toolbar.setTitle(temporaryToolbarTitle);
+            } else toolbar.setTitle(R.string.app_title);
+        });
     }
 
     public StationsDataSource getStationsDataSource() {
@@ -88,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 .commit();
 
         FlightDetailsModel someFlight = flights.get(0);
-        toolbar.setTitle(someFlight.getOrigin() + "-" + someFlight.getDestination());
+        temporaryToolbarTitle = someFlight.getOrigin() + "-" + someFlight.getDestination();
     }
 
     @Override
@@ -115,11 +124,5 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.fragment_container, fragment, FlightDetailsFragment.class.getSimpleName())
                 .addToBackStack(FlightDetailsFragment.class.getSimpleName())
                 .commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        toolbar.setTitle(R.string.app_title);
     }
 }
