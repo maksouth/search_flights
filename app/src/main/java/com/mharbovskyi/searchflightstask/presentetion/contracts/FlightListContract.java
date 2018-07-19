@@ -9,7 +9,7 @@ public interface FlightListContract {
         void showFlights(List<FlightDetailsModel> flights);
         void goToFlightDetailsScreen(FlightDetailsModel flightDetailsModel);
         void setCurrency(String currency);
-        void setFilterPrice(String filterPrice);
+        void setFilterPrice(int filterPrice);
     }
 
     interface Presenter extends BaseContract.Presenter {

@@ -67,8 +67,21 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
         recyclerViewItemDisposable = adapter.getPositionClick()
                 .subscribe(presenter::flightClicked);
 
-        priceFilterSeekBar.setOnSeekBarChangeListener((AbstractSeekBarListener) (seekBar, progress, fromUser) -> {
-            presenter.onNewPriceFilter(progress);
+        priceFilterSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                priceFilterValueLabel.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                presenter.onNewPriceFilter(seekBar.getProgress());
+            }
         });
 
         return view;
@@ -115,7 +128,8 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
     }
 
     @Override
-    public void setFilterPrice(String filterPrice) {
-        priceFilterValueLabel.setText(filterPrice);
+    public void setFilterPrice(int filterPrice) {
+        priceFilterValueLabel.setText(String.valueOf(filterPrice));
+        priceFilterSeekBar.setProgress(filterPrice);
     }
 }

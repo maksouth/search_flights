@@ -11,6 +11,8 @@ import java.util.List;
 public class FlightListPresenter implements FlightListContract.Presenter {
 
     private static final String TAG = FlightListPresenter.class.getSimpleName();
+    private static final int DEFAULT_MAX_PRICE = 150;
+
     private FlightListContract.View view;
     private List<FlightDetailsModel> flights;
 
@@ -20,22 +22,12 @@ public class FlightListPresenter implements FlightListContract.Presenter {
 
     @Override
     public void onNewPriceFilter(int value) {
-        List<FlightDetailsModel> filteredFlights = new ArrayList<>();
-
-        view.setFilterPrice(String.valueOf(value));
-        for (FlightDetailsModel flightDetailsModel : flights)
-            if( Double.valueOf(flightDetailsModel.getRegularFarePrice()) < value)
-                filteredFlights.add(flightDetailsModel);
-            else Log.d(TAG, "Filtered out flight " + flightDetailsModel.getFlightNumber()
-                    + " " + flightDetailsModel.getRegularFarePrice() + "("
-                    + Double.valueOf(flightDetailsModel.getRegularFarePrice())
-                    + "), Max filter price: " + value);
-
-        view.showFlights(filteredFlights);
+        view.showFlights(filterFlights(value));
     }
 
     @Override
     public void loadFlights(List<FlightDetailsModel> flights) {
+        view.setFilterPrice(DEFAULT_MAX_PRICE);
         if(flights != null) {
             this.flights = flights;
             view.setCurrency(flights.get(0).getCurrency());
@@ -51,5 +43,19 @@ public class FlightListPresenter implements FlightListContract.Presenter {
     @Override
     public void destroy() {
         view = null;
+    }
+
+    private List<FlightDetailsModel> filterFlights(int maxPrice) {
+        List<FlightDetailsModel> filteredFlights = new ArrayList<>();
+
+        for (FlightDetailsModel flightDetailsModel : flights)
+            if( Double.valueOf(flightDetailsModel.getRegularFarePrice()) < maxPrice)
+                filteredFlights.add(flightDetailsModel);
+            else Log.d(TAG, "Filtered out flight " + flightDetailsModel.getFlightNumber()
+                    + " " + flightDetailsModel.getRegularFarePrice() + "("
+                    + Double.valueOf(flightDetailsModel.getRegularFarePrice())
+                    + "), Max filter price: " + maxPrice);
+
+        return filteredFlights;
     }
 }
