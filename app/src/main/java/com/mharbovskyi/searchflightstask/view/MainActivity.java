@@ -3,6 +3,8 @@ package com.mharbovskyi.searchflightstask.view;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
@@ -14,7 +16,7 @@ import com.mharbovskyi.searchflightstask.model.Station;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity
+public class MainActivity extends AppCompatActivity
         implements SearchStationFragment.OnNewStationListener,
         NavigationListeners.ShowFlightListNavigationListener,
         NavigationListeners.ShowSearchStationNavigationListener,
@@ -25,11 +27,15 @@ public class MainActivity extends Activity
     private FlightsDataSource flightsDataSource;
     private StationsDataSource stationsDataSource;
     private FragmentManager fragmentManager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.my_toolbar);
+        toolbar.setTitle(R.string.app_title);
 
         fragmentManager = getFragmentManager();
         stationsDataSource = new StationsDataSource();
@@ -80,6 +86,9 @@ public class MainActivity extends Activity
                         FlightListFragment.class.getSimpleName())
                 .addToBackStack(FlightListFragment.class.getSimpleName())
                 .commit();
+
+        FlightDetailsModel someFlight = flights.get(0);
+        toolbar.setTitle(someFlight.getOrigin() + "-" + someFlight.getDestination());
     }
 
     @Override
@@ -106,5 +115,11 @@ public class MainActivity extends Activity
                 .replace(R.id.fragment_container, fragment, FlightDetailsFragment.class.getSimpleName())
                 .addToBackStack(FlightDetailsFragment.class.getSimpleName())
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        toolbar.setTitle(R.string.app_title);
     }
 }
