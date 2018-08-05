@@ -53,8 +53,7 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
         adapter = new SearchStationAdapter();
         stationRecyclerView.setAdapter(adapter);
 
-        presenter = new SearchStationPresenter(this,
-                ((MainActivity)getActivity()).getStationsDataSource());
+        presenter.setView(this);
         searchButton.setOnClickListener(v->presenter.searchButtonClicked());
         presenter.start();
 
@@ -98,6 +97,11 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
     @Override
     public void goToSearchScreen(Station station) {
         interactionListener.onNewStation(station);
+    }
+
+    @Override
+    public void setPresenter(SearchStationContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     public interface OnNewStationListener {

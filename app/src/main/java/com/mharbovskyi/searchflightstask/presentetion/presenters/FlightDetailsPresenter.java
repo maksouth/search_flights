@@ -1,15 +1,12 @@
 package com.mharbovskyi.searchflightstask.presentetion.presenters;
 
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
+import com.mharbovskyi.searchflightstask.presentetion.contracts.BaseContract;
 import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightDetailsContract;
 
 public class FlightDetailsPresenter implements FlightDetailsContract.Presenter {
 
     private FlightDetailsContract.View view;
-
-    public FlightDetailsPresenter(FlightDetailsContract.View view) {
-        this.view = view;
-    }
 
     @Override
     public void loadFlightDetails(FlightDetailsModel flightDetailsModel) {
@@ -25,5 +22,10 @@ public class FlightDetailsPresenter implements FlightDetailsContract.Presenter {
     @Override
     public void destroy() {
         view = null;
+    }
+
+    @Override
+    public void setView(FlightDetailsContract.View view) {
+        this.view = view;
     }
 }

@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.mharbovskyi.searchflightstask.presentetion.contracts.BaseContract;
 
-public abstract class AbstractFragment extends Fragment implements BaseContract.View {
+public abstract class AbstractFragment extends Fragment implements BaseContract.WarningView {
 
     private ProgressDialog progressDialog;
 

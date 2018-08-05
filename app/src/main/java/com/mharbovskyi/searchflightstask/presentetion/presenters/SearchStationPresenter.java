@@ -23,9 +23,7 @@ public class SearchStationPresenter implements SearchStationContract.Presenter {
     private List<Station> stationList;
     private Disposable disposable;
 
-    public SearchStationPresenter(SearchStationContract.View view,
-                                  StationsDataSource stationsDataSource) {
-        this.view = view;
+    public SearchStationPresenter(StationsDataSource stationsDataSource) {
         this.stationsDataSource = stationsDataSource;
     }
 
@@ -70,5 +68,10 @@ public class SearchStationPresenter implements SearchStationContract.Presenter {
             disposable.dispose();
         view = null;
         stationsDataSource = null;
+    }
+
+    @Override
+    public void setView(SearchStationContract.View view) {
+        this.view = view;
     }
 }

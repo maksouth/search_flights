@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface SearchFlightContract {
-    interface View extends BaseContract.View {
+    interface View extends BaseContract.View<Presenter> {
         void setOrigin(String text);
         void setDestination(String text);
         Date getDeparture();
@@ -21,7 +21,7 @@ public interface SearchFlightContract {
                                     Station destination);
     }
 
-    interface Presenter extends BaseContract.Presenter {
+    interface Presenter extends BaseContract.Presenter<View> {
         void onNewStation(Station origin);
         void searchButtonClicked();
         void originLabelClicked();

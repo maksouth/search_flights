@@ -32,9 +32,7 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
 
     private StationType selectedStationType;
 
-    public SearchFlightPresenter(SearchFlightContract.View view,
-                                 FlightsDataSource flightDataSource) {
-        this.view = view;
+    public SearchFlightPresenter(FlightsDataSource flightDataSource) {
         this.flightDataSource = flightDataSource;
     }
 
@@ -94,6 +92,11 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
         if (flightRequestDisposable != null && !flightRequestDisposable.isDisposed())
             flightRequestDisposable.dispose();
         view = null;
+    }
+
+    @Override
+    public void setView(SearchFlightContract.View view) {
+        this.view = view;
     }
 
     private void processNewFlights(List<FlightDetailsModel> flightDetailsModels) {

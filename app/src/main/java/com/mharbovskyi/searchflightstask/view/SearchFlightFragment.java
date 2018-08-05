@@ -60,7 +60,7 @@ public class SearchFlightFragment extends AbstractFragment
         adultsNumberLabel = view.findViewById(R.id.adults_number_label);
         childrenNumberLabel = view.findViewById(R.id.childen_number_label);
 
-        presenter = new SearchFlightPresenter(this, ((MainActivity)getActivity()).getFlightDataSource());
+        presenter.setView(this);
 
         searchButton.setOnClickListener(v -> presenter.searchButtonClicked());
         originLabel.setOnClickListener(v -> presenter.originLabelClicked());
@@ -153,5 +153,10 @@ public class SearchFlightFragment extends AbstractFragment
                                        Station origin, Station destination) {
         // TODO: 18.07.18 pass origin and destination to set toolbar text
         showFlightListFragmentListener.goToFlightListScreen(flights);
+    }
+
+    @Override
+    public void setPresenter(SearchFlightContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 }

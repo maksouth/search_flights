@@ -16,7 +16,8 @@ public class FlightListPresenter implements FlightListContract.Presenter {
     private FlightListContract.View view;
     private List<FlightDetailsModel> flights;
 
-    public FlightListPresenter(FlightListContract.View view) {
+    @Override
+    public void setView(FlightListContract.View view) {
         this.view = view;
     }
 

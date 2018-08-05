@@ -52,7 +52,7 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
         priceFilterValueLabel = view.findViewById(R.id.price_filter_value_label);
         priceCurrencyLabel = view.findViewById(R.id.currency_label);
         adapter = new FlightListAdapter();
-        presenter = new FlightListPresenter(this);
+        presenter.setView(this);
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -131,5 +131,10 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
     public void setFilterPrice(int filterPrice) {
         priceFilterValueLabel.setText(String.valueOf(filterPrice));
         priceFilterSeekBar.setProgress(filterPrice);
+    }
+
+    @Override
+    public void setPresenter(FlightListContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 }
