@@ -1,12 +1,16 @@
 package com.mharbovskyi.searchflightstask.presentetion.presenters;
 
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.BaseContract;
 import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightDetailsContract;
+
+import javax.inject.Inject;
 
 public class FlightDetailsPresenter implements FlightDetailsContract.Presenter {
 
     private FlightDetailsContract.View view;
+
+    @Inject
+    public FlightDetailsPresenter() {}
 
     @Override
     public void loadFlightDetails(FlightDetailsModel flightDetailsModel) {

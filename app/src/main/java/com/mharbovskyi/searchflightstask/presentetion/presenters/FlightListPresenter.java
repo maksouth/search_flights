@@ -8,6 +8,8 @@ import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightListContra
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class FlightListPresenter implements FlightListContract.Presenter {
 
     private static final String TAG = FlightListPresenter.class.getSimpleName();
@@ -15,6 +17,9 @@ public class FlightListPresenter implements FlightListContract.Presenter {
 
     private FlightListContract.View view;
     private List<FlightDetailsModel> flights;
+
+    @Inject
+    public FlightListPresenter(){}
 
     @Override
     public void setView(FlightListContract.View view) {

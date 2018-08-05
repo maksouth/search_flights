@@ -10,6 +10,8 @@ import android.util.Log;
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
 import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
+import com.mharbovskyi.searchflightstask.di.component.DaggerFragmentComponent;
+import com.mharbovskyi.searchflightstask.di.component.FragmentComponent;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.Station;
 
@@ -24,8 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private FlightsDataSource flightsDataSource;
-    private StationsDataSource stationsDataSource;
+    private FragmentComponent fragmentComponent;
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
 
@@ -40,13 +41,12 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle(R.string.app_title);
 
         fragmentManager = getFragmentManager();
-        stationsDataSource = new StationsDataSource();
-        flightsDataSource = new FlightsDataSource();
+        fragmentComponent = DaggerFragmentComponent.create();
 
-        stationsDataSource.getStations().subscribe();
+        fragmentComponent.stationsDataSource().getStations().subscribe();
 
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, new SearchFlightFragment(),
+                .add(R.id.fragment_container, fragmentComponent.searchFlightFragment(),
                         SearchFlightFragment.class.getSimpleName())
                 .commit();
 
@@ -56,14 +56,6 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle(temporaryToolbarTitle);
             } else toolbar.setTitle(R.string.app_title);
         });
-    }
-
-    public StationsDataSource getStationsDataSource() {
-        return stationsDataSource;
-    }
-
-    public FlightsDataSource getFlightDataSource() {
-        return flightsDataSource;
     }
 
     @Override
@@ -83,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goToFlightListScreen(List<FlightDetailsModel> flights) {
-        FlightListFragment fragment = new FlightListFragment();
+        FlightListFragment fragment = fragmentComponent.flightListFragment();
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(FlightListFragment.ARGUMENT_FLIGHTS_LIST, new ArrayList<>(flights));
@@ -104,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     public void goToSearchStationScreen() {
         fragmentManager.beginTransaction()
                 .hide(fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName()))
-                .add(R.id.fragment_container, new SearchStationFragment(),
+                .add(R.id.fragment_container, fragmentComponent.searchStationFragment(),
                         SearchStationFragment.class.getSimpleName())
                 .addToBackStack(SearchStationFragment.class.getSimpleName())
                 .commit();
@@ -114,7 +106,7 @@ public class MainActivity extends AppCompatActivity
     public void goToFlightDetailsScreen(FlightDetailsModel flightDetailsModel) {
         Log.d(TAG, "goToFlightDetailsScreen " + flightDetailsModel);
 
-        FlightDetailsFragment fragment = new FlightDetailsFragment();
+        FlightDetailsFragment fragment = fragmentComponent.flightDetailsFragment();
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(FlightDetailsFragment.ARGUMENT_FLIGHT_DETAILS, flightDetailsModel);
