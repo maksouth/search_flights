@@ -14,18 +14,6 @@ public class StationsDataSource {
     private Observable<List<Station>> stationListObservable;
 
     public StationsDataSource(StationListService service) {
-//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-//
-//        retrofit = new Retrofit.Builder()
-//                .baseUrl(StationListService.BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .client(client)
-//                .build();
-
-//        this.service = retrofit.create(StationListService.class);
         stationListObservable = service.getStations()
                 .subscribeOn(Schedulers.io())
                 .flatMap(stationList -> Observable.fromArray(stationList.stations))

@@ -8,8 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
-import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
-import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
 import com.mharbovskyi.searchflightstask.di.component.DaggerFragmentComponent;
 import com.mharbovskyi.searchflightstask.di.component.FragmentComponent;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;

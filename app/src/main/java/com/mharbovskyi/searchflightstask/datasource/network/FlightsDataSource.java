@@ -21,23 +21,6 @@ public class FlightsDataSource {
     private final FlightService flightService;
 
     public FlightsDataSource(FlightService flightService) {
-//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-//
-//        retrofit = retrofit.newBuilder()
-//                .baseUrl(FlightService.BASE_URL)
-//                .build();
-//
-//        retrofit = new Retrofit.Builder()
-//                .baseUrl(FlightService.BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .client(client)
-//                .build();
-//
-//        flightService = retrofit.create(FlightService.class);
-//
         this.flightService = flightService;
     }
 
