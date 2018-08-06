@@ -15,7 +15,7 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = RemoteDataSourceModule.class)
+@Module(includes = MockDataSourceModule.class)
 public abstract class PresenterModule {
     @Binds
     public abstract FlightDetailsContract.Presenter bindFlightDetailsPresenter(FlightDetailsPresenter presenter);
