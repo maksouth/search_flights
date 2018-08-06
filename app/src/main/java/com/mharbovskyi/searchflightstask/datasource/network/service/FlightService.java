@@ -2,7 +2,6 @@ package com.mharbovskyi.searchflightstask.datasource.network.service;
 
 import com.mharbovskyi.searchflightstask.datasource.network.rawmodel.flights.RawFlightDetailsModel;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;

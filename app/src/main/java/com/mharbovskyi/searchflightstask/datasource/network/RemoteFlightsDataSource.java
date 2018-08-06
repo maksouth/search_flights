@@ -1,5 +1,6 @@
 package com.mharbovskyi.searchflightstask.datasource.network;
 
+import com.mharbovskyi.searchflightstask.datasource.FlightsDataSource;
 import com.mharbovskyi.searchflightstask.datasource.network.rawmodel.mapper.RawFlightDetailsMapper;
 import com.mharbovskyi.searchflightstask.datasource.network.service.FlightService;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
@@ -13,14 +14,14 @@ import java.util.Map;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FlightsDataSource {
+public class RemoteFlightsDataSource implements FlightsDataSource {
 
-    private static final String TAG = FlightsDataSource.class.getSimpleName();
+    private static final String TAG = RemoteFlightsDataSource.class.getSimpleName();
 
     private final SimpleDateFormat departureRequestFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final FlightService flightService;
 
-    public FlightsDataSource(FlightService flightService) {
+    public RemoteFlightsDataSource(FlightService flightService) {
         this.flightService = flightService;
     }
 

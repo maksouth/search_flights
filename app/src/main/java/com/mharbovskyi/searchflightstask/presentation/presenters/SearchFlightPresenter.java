@@ -1,13 +1,13 @@
-package com.mharbovskyi.searchflightstask.presentetion.presenters;
+package com.mharbovskyi.searchflightstask.presentation.presenters;
 
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
-import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
+import com.mharbovskyi.searchflightstask.datasource.FlightsDataSource;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.SearchRequestModel;
 import com.mharbovskyi.searchflightstask.model.Station;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchFlightContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchFlightContract;
 import com.mharbovskyi.searchflightstask.view.SearchFlightFragment;
 
 import java.util.Date;

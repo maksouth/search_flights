@@ -1,11 +1,11 @@
-package com.mharbovskyi.searchflightstask.presentetion.presenters;
+package com.mharbovskyi.searchflightstask.presentation.presenters;
 
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.R;
-import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
+import com.mharbovskyi.searchflightstask.datasource.StationsDataSource;
 import com.mharbovskyi.searchflightstask.model.Station;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchStationContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchStationContract;
 import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 
 import java.util.LinkedList;

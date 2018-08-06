@@ -1,7 +1,6 @@
-package com.mharbovskyi.searchflightstask.presentetion.contracts;
+package com.mharbovskyi.searchflightstask.presentation.contracts;
 
 import com.mharbovskyi.searchflightstask.model.Station;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.BaseContract;
 
 import java.util.List;
 

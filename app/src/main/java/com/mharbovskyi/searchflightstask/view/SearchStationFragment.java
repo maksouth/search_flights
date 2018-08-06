@@ -12,8 +12,7 @@ import android.widget.EditText;
 
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.Station;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchStationContract;
-import com.mharbovskyi.searchflightstask.presentetion.presenters.SearchStationPresenter;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchStationContract;
 import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 
 import java.util.List;

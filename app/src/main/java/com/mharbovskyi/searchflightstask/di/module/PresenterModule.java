@@ -1,21 +1,21 @@
 package com.mharbovskyi.searchflightstask.di.module;
 
-import com.mharbovskyi.searchflightstask.datasource.network.FlightsDataSource;
-import com.mharbovskyi.searchflightstask.datasource.network.StationsDataSource;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightDetailsContract;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightListContract;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchFlightContract;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchStationContract;
-import com.mharbovskyi.searchflightstask.presentetion.presenters.FlightDetailsPresenter;
-import com.mharbovskyi.searchflightstask.presentetion.presenters.FlightListPresenter;
-import com.mharbovskyi.searchflightstask.presentetion.presenters.SearchFlightPresenter;
-import com.mharbovskyi.searchflightstask.presentetion.presenters.SearchStationPresenter;
+import com.mharbovskyi.searchflightstask.datasource.FlightsDataSource;
+import com.mharbovskyi.searchflightstask.datasource.StationsDataSource;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightDetailsContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightListContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchFlightContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchStationContract;
+import com.mharbovskyi.searchflightstask.presentation.presenters.FlightDetailsPresenter;
+import com.mharbovskyi.searchflightstask.presentation.presenters.FlightListPresenter;
+import com.mharbovskyi.searchflightstask.presentation.presenters.SearchFlightPresenter;
+import com.mharbovskyi.searchflightstask.presentation.presenters.SearchStationPresenter;
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = DataSourceModule.class)
+@Module(includes = RemoteDataSourceModule.class)
 public abstract class PresenterModule {
     @Binds
     public abstract FlightDetailsContract.Presenter bindFlightDetailsPresenter(FlightDetailsPresenter presenter);

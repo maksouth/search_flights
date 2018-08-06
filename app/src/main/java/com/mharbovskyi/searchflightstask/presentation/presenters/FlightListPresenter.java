@@ -1,9 +1,9 @@
-package com.mharbovskyi.searchflightstask.presentetion.presenters;
+package com.mharbovskyi.searchflightstask.presentation.presenters;
 
 import android.util.Log;
 
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightListContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightListContract;
 
 import java.util.ArrayList;
 import java.util.List;

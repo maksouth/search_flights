@@ -1,4 +1,4 @@
-package com.mharbovskyi.searchflightstask.presentetion.contracts;
+package com.mharbovskyi.searchflightstask.presentation.contracts;
 
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 

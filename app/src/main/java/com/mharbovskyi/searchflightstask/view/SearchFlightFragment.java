@@ -13,8 +13,7 @@ import android.widget.TextView;
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.Station;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchFlightContract;
-import com.mharbovskyi.searchflightstask.presentetion.presenters.SearchFlightPresenter;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchFlightContract;
 
 import java.util.Calendar;
 import java.util.Date;

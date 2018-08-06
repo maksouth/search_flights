@@ -2,7 +2,6 @@ package com.mharbovskyi.searchflightstask.view;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +13,7 @@ import android.widget.TextView;
 
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightListContract;
-import com.mharbovskyi.searchflightstask.presentetion.presenters.FlightListPresenter;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightListContract;
 import com.mharbovskyi.searchflightstask.view.adapters.FlightListAdapter;
 
 import java.util.List;

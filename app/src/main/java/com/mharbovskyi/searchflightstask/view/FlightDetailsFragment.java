@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mharbovskyi.searchflightstask.R;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightDetailsContract;
-
-import javax.inject.Inject;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightDetailsContract;
 
 /**
  * A simple {@link Fragment} subclass.

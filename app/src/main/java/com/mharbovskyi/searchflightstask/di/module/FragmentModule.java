@@ -1,9 +1,9 @@
 package com.mharbovskyi.searchflightstask.di.module;
 
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightDetailsContract;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightListContract;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchFlightContract;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.SearchStationContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightDetailsContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightListContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchFlightContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.SearchStationContract;
 import com.mharbovskyi.searchflightstask.view.FlightDetailsFragment;
 import com.mharbovskyi.searchflightstask.view.FlightListFragment;
 import com.mharbovskyi.searchflightstask.view.SearchFlightFragment;

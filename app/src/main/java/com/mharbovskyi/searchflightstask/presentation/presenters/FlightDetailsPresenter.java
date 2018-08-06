@@ -1,7 +1,7 @@
-package com.mharbovskyi.searchflightstask.presentetion.presenters;
+package com.mharbovskyi.searchflightstask.presentation.presenters;
 
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
-import com.mharbovskyi.searchflightstask.presentetion.contracts.FlightDetailsContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.FlightDetailsContract;
 
 import javax.inject.Inject;
 

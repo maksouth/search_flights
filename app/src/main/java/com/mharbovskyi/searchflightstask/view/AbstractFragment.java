@@ -5,7 +5,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.widget.Toast;
 
-import com.mharbovskyi.searchflightstask.presentetion.contracts.BaseContract;
+import com.mharbovskyi.searchflightstask.presentation.contracts.BaseContract;
 
 public abstract class AbstractFragment extends Fragment implements BaseContract.WarningView {
 
