@@ -2,6 +2,7 @@ package com.mharbovskyi.searchflightstask.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+
 public class SearchFlightFragment extends AbstractFragment
         implements SearchFlightContract.View {
 
-    private SearchFlightContract.Presenter presenter;
+    @Inject
+    SearchFlightContract.Presenter presenter;
 
     private NavigationListeners.ShowFlightListNavigationListener showFlightListFragmentListener;
     private NavigationListeners.ShowSearchStationNavigationListener searchStationFragmentListener;
@@ -42,7 +48,6 @@ public class SearchFlightFragment extends AbstractFragment
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +64,7 @@ public class SearchFlightFragment extends AbstractFragment
         adultsNumberLabel = view.findViewById(R.id.adults_number_label);
         childrenNumberLabel = view.findViewById(R.id.childen_number_label);
 
-        presenter.setView(this);
+        //presenter.setView(this);
 
         searchButton.setOnClickListener(v -> presenter.searchButtonClicked());
         originLabel.setOnClickListener(v -> presenter.originLabelClicked());
@@ -83,6 +88,7 @@ public class SearchFlightFragment extends AbstractFragment
 
     @Override
     public void onAttach(Context context) {
+        AndroidInjection.inject(this);
         super.onAttach(context);
         if (context instanceof NavigationListeners.ShowFlightListNavigationListener) {
             showFlightListFragmentListener = (NavigationListeners.ShowFlightListNavigationListener) context;
@@ -156,6 +162,6 @@ public class SearchFlightFragment extends AbstractFragment
 
     @Override
     public void setPresenter(SearchFlightContract.Presenter presenter) {
-        this.presenter = presenter;
+        //this.presenter = presenter;
     }
 }

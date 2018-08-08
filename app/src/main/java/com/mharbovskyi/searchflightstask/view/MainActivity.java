@@ -1,9 +1,9 @@
 package com.mharbovskyi.searchflightstask.view;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -16,13 +16,24 @@ import com.mharbovskyi.searchflightstask.model.Station;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-        implements SearchStationFragment.OnNewStationListener,
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasFragmentInjector;
+
+public class MainActivity extends Activity
+        implements HasFragmentInjector,
+        SearchStationFragment.OnNewStationListener,
         NavigationListeners.ShowFlightListNavigationListener,
         NavigationListeners.ShowSearchStationNavigationListener,
         NavigationListeners.ShowFlightDetailsNavigationListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     private FragmentComponent fragmentComponent;
     private FragmentManager fragmentManager;
@@ -32,6 +43,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -114,5 +126,10 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.fragment_container, fragment, FlightDetailsFragment.class.getSimpleName())
                 .addToBackStack(FlightDetailsFragment.class.getSimpleName())
                 .commit();
+    }
+
+    @Override
+    public AndroidInjector<Fragment> fragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
     }
 }

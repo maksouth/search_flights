@@ -23,10 +23,10 @@ public abstract class PresenterModule {
     @Binds
     public abstract FlightListContract.Presenter bindFlightListPresenter(FlightListPresenter presenter);
 
-    @Provides
-    public static SearchFlightContract.Presenter provideSearchFlightPresenter(FlightsDataSource flightsDataSource) {
-        return new SearchFlightPresenter(flightsDataSource);
-    }
+//    @Provides
+//    public static SearchFlightContract.Presenter provideSearchFlightPresenter(FlightsDataSource flightsDataSource) {
+//        return new SearchFlightPresenter(flightsDataSource);
+//    }
 
     @Provides
     public static SearchStationContract.Presenter provideSearchStationPresenter(StationsDataSource stationsDataSource) {

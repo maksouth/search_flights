@@ -30,9 +30,9 @@ public class FragmentModule {
     }
 
     @Provides
-    SearchFlightFragment provideSearchFlightFragment(SearchFlightContract.Presenter presenter) {
+    SearchFlightFragment provideSearchFlightFragment(/*SearchFlightContract.Presenter presenter*/) {
         SearchFlightFragment fragment = new SearchFlightFragment();
-        fragment.setPresenter(presenter);
+        //fragment.setPresenter(presenter);
         return fragment;
     }
 

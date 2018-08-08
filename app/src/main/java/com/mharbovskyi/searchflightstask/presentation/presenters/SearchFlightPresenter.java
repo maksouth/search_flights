@@ -13,6 +13,8 @@ import com.mharbovskyi.searchflightstask.view.SearchFlightFragment;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -32,8 +34,10 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
 
     private StationType selectedStationType;
 
-    public SearchFlightPresenter(FlightsDataSource flightDataSource) {
+    @Inject
+    public SearchFlightPresenter(SearchFlightContract.View view, FlightsDataSource flightDataSource) {
         this.flightDataSource = flightDataSource;
+        this.view = view;
     }
 
     @Override

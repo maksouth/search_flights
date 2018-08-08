@@ -1,7 +1,6 @@
 package com.mharbovskyi.searchflightstask.di.component;
 
 import com.mharbovskyi.searchflightstask.datasource.StationsDataSource;
-import com.mharbovskyi.searchflightstask.datasource.network.RemoteStationsDataSource;
 import com.mharbovskyi.searchflightstask.di.module.FragmentModule;
 import com.mharbovskyi.searchflightstask.di.module.PresenterModule;
 import com.mharbovskyi.searchflightstask.view.FlightDetailsFragment;
