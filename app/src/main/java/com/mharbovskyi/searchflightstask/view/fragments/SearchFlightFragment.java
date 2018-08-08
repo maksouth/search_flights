@@ -1,4 +1,4 @@
-package com.mharbovskyi.searchflightstask.view;
+package com.mharbovskyi.searchflightstask.view.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.Station;
 import com.mharbovskyi.searchflightstask.presentation.contracts.SearchFlightContract;
+import com.mharbovskyi.searchflightstask.view.AbstractFragment;
+import com.mharbovskyi.searchflightstask.view.AbstractSeekBarListener;
+import com.mharbovskyi.searchflightstask.view.NavigationListeners;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +27,7 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
+// TODO: 08.08.18 bug, origin and destination is placeholder when go back to this fragment, although value is stored
 public class SearchFlightFragment extends AbstractFragment
         implements SearchFlightContract.View {
 
@@ -88,7 +92,6 @@ public class SearchFlightFragment extends AbstractFragment
 
     @Override
     public void onAttach(Context context) {
-        AndroidInjection.inject(this);
         super.onAttach(context);
         if (context instanceof NavigationListeners.ShowFlightListNavigationListener) {
             showFlightListFragmentListener = (NavigationListeners.ShowFlightListNavigationListener) context;
@@ -158,10 +161,5 @@ public class SearchFlightFragment extends AbstractFragment
                                        Station origin, Station destination) {
         // TODO: 18.07.18 pass origin and destination to set toolbar text
         showFlightListFragmentListener.goToFlightListScreen(flights);
-    }
-
-    @Override
-    public void setPresenter(SearchFlightContract.Presenter presenter) {
-        //this.presenter = presenter;
     }
 }

@@ -8,7 +8,7 @@ import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.model.SearchRequestModel;
 import com.mharbovskyi.searchflightstask.model.Station;
 import com.mharbovskyi.searchflightstask.presentation.contracts.SearchFlightContract;
-import com.mharbovskyi.searchflightstask.view.SearchFlightFragment;
+import com.mharbovskyi.searchflightstask.view.fragments.SearchFlightFragment;
 
 import java.util.Date;
 import java.util.List;
@@ -24,8 +24,8 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
 
     enum StationType { ORIGIN, DESTINATION };
 
+    private final FlightsDataSource flightDataSource;
     private SearchFlightContract.View view;
-    private FlightsDataSource flightDataSource;
 
     private Disposable flightRequestDisposable;
 
@@ -35,7 +35,7 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
     private StationType selectedStationType;
 
     @Inject
-    public SearchFlightPresenter(SearchFlightContract.View view, FlightsDataSource flightDataSource) {
+    SearchFlightPresenter(SearchFlightContract.View view, FlightsDataSource flightDataSource) {
         this.flightDataSource = flightDataSource;
         this.view = view;
     }
@@ -96,11 +96,6 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
         if (flightRequestDisposable != null && !flightRequestDisposable.isDisposed())
             flightRequestDisposable.dispose();
         view = null;
-    }
-
-    @Override
-    public void setView(SearchFlightContract.View view) {
-        this.view = view;
     }
 
     private void processNewFlights(List<FlightDetailsModel> flightDetailsModels) {

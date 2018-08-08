@@ -1,4 +1,4 @@
-package com.mharbovskyi.searchflightstask.view;
+package com.mharbovskyi.searchflightstask.view.fragments;
 
 
 import android.content.Context;
@@ -14,9 +14,13 @@ import android.widget.TextView;
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.FlightDetailsModel;
 import com.mharbovskyi.searchflightstask.presentation.contracts.FlightListContract;
+import com.mharbovskyi.searchflightstask.view.AbstractFragment;
+import com.mharbovskyi.searchflightstask.view.NavigationListeners;
 import com.mharbovskyi.searchflightstask.view.adapters.FlightListAdapter;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
 
@@ -24,9 +28,10 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
 
     public static final String ARGUMENT_FLIGHTS_LIST = "flights-list";
 
-    private NavigationListeners.ShowFlightDetailsNavigationListener flightDetailsNavigationListener;
-    private FlightListContract.Presenter presenter;
+    @Inject
+    FlightListContract.Presenter presenter;
 
+    private NavigationListeners.ShowFlightDetailsNavigationListener flightDetailsNavigationListener;
     private FlightListAdapter adapter;
 
     private Disposable recyclerViewItemDisposable;
@@ -40,7 +45,6 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,7 +54,6 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
         priceFilterValueLabel = view.findViewById(R.id.price_filter_value_label);
         priceCurrencyLabel = view.findViewById(R.id.currency_label);
         adapter = new FlightListAdapter();
-        presenter.setView(this);
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -83,11 +86,6 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
         });
 
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -129,10 +127,5 @@ public class FlightListFragment extends AbstractFragment implements FlightListCo
     public void setFilterPrice(int filterPrice) {
         priceFilterValueLabel.setText(String.valueOf(filterPrice));
         priceFilterSeekBar.setProgress(filterPrice);
-    }
-
-    @Override
-    public void setPresenter(FlightListContract.Presenter presenter) {
-        this.presenter = presenter;
     }
 }

@@ -10,7 +10,9 @@ public class FlightDetailsPresenter implements FlightDetailsContract.Presenter {
     private FlightDetailsContract.View view;
 
     @Inject
-    public FlightDetailsPresenter() {}
+    FlightDetailsPresenter(FlightDetailsContract.View view) {
+        this.view = view;
+    }
 
     @Override
     public void loadFlightDetails(FlightDetailsModel flightDetailsModel) {
@@ -26,10 +28,5 @@ public class FlightDetailsPresenter implements FlightDetailsContract.Presenter {
     @Override
     public void destroy() {
         view = null;
-    }
-
-    @Override
-    public void setView(FlightDetailsContract.View view) {
-        this.view = view;
     }
 }

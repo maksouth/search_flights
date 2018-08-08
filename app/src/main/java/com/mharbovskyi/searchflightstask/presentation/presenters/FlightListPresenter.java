@@ -19,10 +19,7 @@ public class FlightListPresenter implements FlightListContract.Presenter {
     private List<FlightDetailsModel> flights;
 
     @Inject
-    public FlightListPresenter(){}
-
-    @Override
-    public void setView(FlightListContract.View view) {
+    FlightListPresenter(FlightListContract.View view){
         this.view = view;
     }
 

@@ -1,4 +1,4 @@
-package com.mharbovskyi.searchflightstask.view;
+package com.mharbovskyi.searchflightstask.view.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,15 +13,20 @@ import android.widget.EditText;
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.model.Station;
 import com.mharbovskyi.searchflightstask.presentation.contracts.SearchStationContract;
+import com.mharbovskyi.searchflightstask.view.AbstractFragment;
 import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
 
 public class SearchStationFragment extends AbstractFragment implements SearchStationContract.View {
 
-    private SearchStationContract.Presenter presenter;
+    @Inject
+    SearchStationContract.Presenter presenter;
+
     private OnNewStationListener interactionListener;
 
     private SearchStationAdapter adapter;
@@ -52,7 +57,6 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
         adapter = new SearchStationAdapter();
         stationRecyclerView.setAdapter(adapter);
 
-        presenter.setView(this);
         searchButton.setOnClickListener(v->presenter.searchButtonClicked());
         presenter.start();
 
@@ -96,11 +100,6 @@ public class SearchStationFragment extends AbstractFragment implements SearchSta
     @Override
     public void goToSearchScreen(Station station) {
         interactionListener.onNewStation(station);
-    }
-
-    @Override
-    public void setPresenter(SearchStationContract.Presenter presenter) {
-        this.presenter = presenter;
     }
 
     public interface OnNewStationListener {

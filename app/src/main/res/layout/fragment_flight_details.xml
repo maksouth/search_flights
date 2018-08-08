@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mharbovskyi.searchflightstask.view.FlightDetailsFragment">
+    tools:context="com.mharbovskyi.searchflightstask.view.fragments.FlightDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

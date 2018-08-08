@@ -1,4 +1,4 @@
-package com.mharbovskyi.searchflightstask.view;
+package com.mharbovskyi.searchflightstask.view.fragments;
 
 
 import android.app.Fragment;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.mharbovskyi.searchflightstask.R;
 import com.mharbovskyi.searchflightstask.presentation.contracts.FlightDetailsContract;
+import com.mharbovskyi.searchflightstask.view.AbstractFragment;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,13 +21,14 @@ public class FlightDetailsFragment extends AbstractFragment implements FlightDet
 
     public static final String ARGUMENT_FLIGHT_DETAILS = "argument-flight-details";
 
+    @Inject
+    FlightDetailsContract.Presenter presenter;
+
     private TextView originLabel;
     private TextView destinationLabel;
     private TextView infantsLeftLabel;
     private TextView fareClassLabel;
     private TextView discountInPercentLabel;
-
-    FlightDetailsContract.Presenter presenter;
 
     public FlightDetailsFragment() {
         // Required empty public constructor
@@ -41,7 +45,6 @@ public class FlightDetailsFragment extends AbstractFragment implements FlightDet
         fareClassLabel = view.findViewById(R.id.fare_class_label);
         discountInPercentLabel = view.findViewById(R.id.discount_label);
 
-        presenter.setView(this);
         presenter.loadFlightDetails(getArguments().getParcelable(ARGUMENT_FLIGHT_DETAILS));
 
         return view;
@@ -70,10 +73,5 @@ public class FlightDetailsFragment extends AbstractFragment implements FlightDet
     @Override
     public void setDiscountInPercent(String discountInPercent) {
         discountInPercentLabel.setText(discountInPercent);
-    }
-
-    @Override
-    public void setPresenter(FlightDetailsContract.Presenter presenter) {
-        this.presenter = presenter;
     }
 }

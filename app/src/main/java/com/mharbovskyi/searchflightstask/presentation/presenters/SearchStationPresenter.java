@@ -11,6 +11,8 @@ import com.mharbovskyi.searchflightstask.view.adapters.SearchStationAdapter;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -18,15 +20,16 @@ public class SearchStationPresenter implements SearchStationContract.Presenter {
 
     private static final String TAG = SearchStationAdapter.class.getSimpleName();
 
+    private final StationsDataSource stationsDataSource;
     private SearchStationContract.View view;
-    private StationsDataSource stationsDataSource;
     private List<Station> stationList;
     private Disposable disposable;
 
-    public SearchStationPresenter(StationsDataSource stationsDataSource) {
+    @Inject
+    SearchStationPresenter(StationsDataSource stationsDataSource, SearchStationContract.View view) {
         this.stationsDataSource = stationsDataSource;
+        this.view = view;
     }
-
 
     @Override
     public void start() {
@@ -67,11 +70,5 @@ public class SearchStationPresenter implements SearchStationContract.Presenter {
         if(!disposable.isDisposed())
             disposable.dispose();
         view = null;
-        stationsDataSource = null;
-    }
-
-    @Override
-    public void setView(SearchStationContract.View view) {
-        this.view = view;
     }
 }

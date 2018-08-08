@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.mharbovskyi.searchflightstask.view.FlightListFragment">
+    tools:context="com.mharbovskyi.searchflightstask.view.fragments.FlightListFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/flights_list"

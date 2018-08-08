@@ -9,10 +9,10 @@ import dagger.Binds;
 import dagger.Module;
 
 @Module
-public abstract class MockDataSourceModule {
+public interface MockDataSourceModule {
     @Binds
-    abstract FlightsDataSource bindFlightsDataSource(MockFlightDataSource flightDataSource);
+    FlightsDataSource bindFlightsDataSource(MockFlightDataSource flightDataSource);
 
     @Binds
-    abstract StationsDataSource bindStationsDataSource(MockStationsDataSource stationsDataSource);
+    StationsDataSource bindStationsDataSource(MockStationsDataSource stationsDataSource);
 }
