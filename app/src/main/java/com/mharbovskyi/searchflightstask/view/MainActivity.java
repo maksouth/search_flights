@@ -21,7 +21,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.Lazy;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasFragmentInjector;
@@ -38,13 +37,6 @@ public class MainActivity extends Activity
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
-
-    FlightDetailsFragment flightDetailsFragment;
-    FlightListFragment flightListFragment;
-    SearchFlightFragment searchFlightFragment;
-    SearchStationFragment searchStationFragment;
-
-    //private FragmentComponent fragmentComponent;
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
 
@@ -54,11 +46,6 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        flightDetailsFragment = new FlightDetailsFragment();
-        flightListFragment = new FlightListFragment();
-        searchFlightFragment = new SearchFlightFragment();
-        searchStationFragment = new SearchStationFragment();
 
         DaggerActivityComponent
                 .builder()
@@ -70,12 +57,8 @@ public class MainActivity extends Activity
         toolbar.setTitle(R.string.app_title);
 
         fragmentManager = getFragmentManager();
-        //fragmentComponent = DaggerFragmentComponent.create();
-
-        //fragmentComponent.stationsDataSource().getStations().subscribe();
-
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, searchFlightFragment,
+                .add(R.id.fragment_container, new SearchFlightFragment(),
                         SearchFlightFragment.class.getSimpleName())
                 .commit();
 
@@ -104,7 +87,7 @@ public class MainActivity extends Activity
 
     @Override
     public void goToFlightListScreen(List<FlightDetailsModel> flights) {
-        FlightListFragment fragment = flightListFragment;
+        FlightListFragment fragment = new FlightListFragment();
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(FlightListFragment.ARGUMENT_FLIGHTS_LIST, new ArrayList<>(flights));
@@ -125,7 +108,7 @@ public class MainActivity extends Activity
     public void goToSearchStationScreen() {
         fragmentManager.beginTransaction()
                 .hide(fragmentManager.findFragmentByTag(SearchFlightFragment.class.getSimpleName()))
-                .add(R.id.fragment_container, searchStationFragment,
+                .add(R.id.fragment_container, new SearchStationFragment(),
                         SearchStationFragment.class.getSimpleName())
                 .addToBackStack(SearchStationFragment.class.getSimpleName())
                 .commit();
@@ -135,7 +118,7 @@ public class MainActivity extends Activity
     public void goToFlightDetailsScreen(FlightDetailsModel flightDetailsModel) {
         Log.d(TAG, "goToFlightDetailsScreen " + flightDetailsModel);
 
-        FlightDetailsFragment fragment = flightDetailsFragment;
+        FlightDetailsFragment fragment = new FlightDetailsFragment();
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(FlightDetailsFragment.ARGUMENT_FLIGHT_DETAILS, flightDetailsModel);
