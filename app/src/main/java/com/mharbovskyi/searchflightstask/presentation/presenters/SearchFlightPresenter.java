@@ -22,7 +22,7 @@ public class SearchFlightPresenter implements SearchFlightContract.Presenter {
 
     private static final String TAG = SearchFlightFragment.class.getSimpleName();
 
-    enum StationType { ORIGIN, DESTINATION };
+    enum StationType { ORIGIN, DESTINATION }
 
     private final FlightsDataSource flightDataSource;
     private SearchFlightContract.View view;

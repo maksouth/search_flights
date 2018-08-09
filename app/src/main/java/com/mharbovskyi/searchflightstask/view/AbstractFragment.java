@@ -1,16 +1,14 @@
 package com.mharbovskyi.searchflightstask.view;
 
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.widget.Toast;
 
 import com.mharbovskyi.searchflightstask.presentation.contracts.BaseContract;
 
-import dagger.android.AndroidInjection;
+import dagger.android.DaggerFragment;
 
-public abstract class AbstractFragment extends Fragment implements BaseContract.View {
+public abstract class AbstractFragment extends DaggerFragment implements BaseContract.View {
 
     private ProgressDialog progressDialog;
 
@@ -21,12 +19,6 @@ public abstract class AbstractFragment extends Fragment implements BaseContract.
     @Override
     public void showError(int messageResourceId) {
         Toast.makeText(getActivity(), getString(messageResourceId), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        AndroidInjection.inject(this);
     }
 
     @Override
