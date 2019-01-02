@@ -27,7 +27,6 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
-// TODO: 08.08.18 bug, origin and destination is placeholder when go back to this fragment, although value is stored
 public class SearchFlightFragment extends AbstractFragment
         implements SearchFlightContract.View {
 
@@ -159,7 +158,6 @@ public class SearchFlightFragment extends AbstractFragment
     @Override
     public void goToFlightResultScreen(List<FlightDetailsModel> flights,
                                        Station origin, Station destination) {
-        // TODO: 18.07.18 pass origin and destination to set toolbar text
         showFlightListFragmentListener.goToFlightListScreen(flights);
     }
 }

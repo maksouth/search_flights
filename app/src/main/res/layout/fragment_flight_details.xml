@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.mharbovskyi.searchflightstask.view.fragments.FlightDetailsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <TextView
         android:id="@+id/origin_label"
         android:layout_width="wrap_content"

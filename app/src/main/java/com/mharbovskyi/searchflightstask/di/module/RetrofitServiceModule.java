@@ -15,7 +15,6 @@ public class RetrofitServiceModule {
     @Provides
     @Singleton
     public FlightService provideFlightService(Retrofit.Builder builder) {
-        // TODO: 05.08.18 maybe use @Named for URLs
         Retrofit retrofit = builder.baseUrl(FlightService.BASE_URL)
                 .build();
         return retrofit.create(FlightService.class);

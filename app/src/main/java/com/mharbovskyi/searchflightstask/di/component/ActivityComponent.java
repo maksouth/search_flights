@@ -11,7 +11,6 @@ import javax.inject.Singleton;
 import dagger.BindsInstance;
 import dagger.Component;
 
-// TODO: 08.08.18 SearchFlightModule move to proper component or module
 @Singleton
 @Component(modules = {MockDataSourceModule.class, FragmentsProviderModule.class})
 public interface ActivityComponent {

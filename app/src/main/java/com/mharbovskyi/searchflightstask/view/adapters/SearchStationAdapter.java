@@ -27,7 +27,6 @@ public class SearchStationAdapter extends RecyclerView.Adapter<SearchStationAdap
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView stationName;
         TextView stationCode;
-        // TODO: 17.07.18 is it ok?
         Station value;
 
         ViewHolder(View view) {
